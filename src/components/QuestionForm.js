@@ -1,26 +1,44 @@
 import React, { useState } from "react";
 
-function QuestionForm(props) {
-  const [formData, setFormData] = useState({
-    prompt: "",
-    answer1: "",
-    answer2: "",
-    answer3: "",
-    answer4: "",
-    correctIndex: 0,
-  });
 
-  function handleChange(event) {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
-  }
+function QuestionForm({ addQuestion }) {
+const [formData, setFormData] = useState({
+prompt: "",
+answer1: "",
+answer2: "",
+answer3: "",
+answer4: "",
+correctIndex: 0,
+});
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    console.log(formData);
-  }
+const handleChange = (event) => {
+setFormData({
+...formData,
+[event.target.name]: event.target.value,
+});
+};
+
+const handleSubmit = (event) => {
+event.preventDefault();
+addQuestion({
+prompt: formData.prompt,
+answers: [
+formData.answer1,
+formData.answer2,
+formData.answer3,
+formData.answer4,
+],
+correctIndex: parseInt(formData.correctIndex),
+});
+setFormData({
+prompt: "",
+answer1: "",
+answer2: "",
+answer3: "",
+answer4: "",
+correctIndex: 0,
+});
+};
 
   return (
     <section>
