@@ -3,7 +3,8 @@ import React from "react";
 function QuestionItem({ question, onDelete }) {
 const { id, prompt, answers, correctIndex } = question;
 
-function handleDelete (){
+function handleDelete (e){
+  e.preventDefault()
   fetch(`http://localhost:4000/questions/${question.id}`, {
     method:"DELETE"
   })

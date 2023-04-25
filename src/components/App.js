@@ -7,12 +7,14 @@ import QuestionList from "./QuestionList";
 function App() {
 const [questions, setQuestions] = useState([]);
 const [page, setPage] = useState("List");
-
-useEffect(() => {
+function fetchQuestions (){
 fetch('http://localhost:4000/questions')
 .then(res => res.json())
 .then(data => setQuestions(data))
 .catch((error) => console.log(error));
+}
+useEffect(() => {
+fetchQuestions()
 }, [])
 
 const addQuestion = (newQuestion) => {
@@ -25,11 +27,14 @@ body: JSON.stringify(newQuestion)
 .then(data => setQuestions([...questions, data]))
 .catch(error => console.log(error))
 }
+function onDelete() {
+  fetchQuestions()
+  }
 
 return (
 <main>
 <AdminNavBar onChangePage={setPage} />
-{page === "Form" ? <QuestionForm addQuestion={addQuestion} /> : <QuestionList questions={questions} setQuestions= {setQuestions}/>}
+{page === "Form" ? <QuestionForm addQuestion={addQuestion} /> : <QuestionList questions={questions} setQuestions= {setQuestions} onDelete ={onDelete}/>}
 </main>
 );
 }
